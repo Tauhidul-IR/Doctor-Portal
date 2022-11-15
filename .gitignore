@@ -11,6 +11,9 @@
 # production
 /build
 
+#other
+DashBoard.js
+DashBoardTable.js
 # misc
 .DS_Store
 .env.local

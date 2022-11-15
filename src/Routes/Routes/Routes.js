@@ -7,6 +7,7 @@ import Login from '../../Pages/Login/Login';
 import SignUp from '../../Pages/SignUp/SignUp';
 import DashBoard from '../../Pages/DashBoard/DashBoard/DashBoard';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import ResetPassword from '../../Pages/Login/ResetPassword';
 
 
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: '/appointment',
                 element: <Appointment></Appointment>
+            },
+            {
+                path: '/resetPassword',
+                element: <ResetPassword></ResetPassword>
             },
 
         ]
