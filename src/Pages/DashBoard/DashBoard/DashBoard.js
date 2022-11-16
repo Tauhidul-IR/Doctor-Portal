@@ -8,7 +8,12 @@ const DashBoard = () => {
             <section class="grid grid-cols-5 gap-4 ">
                 <div class=" text-center">Appointment </div>
                 <div>
-                    hello
+                    <div>
+                        <div>
+
+
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

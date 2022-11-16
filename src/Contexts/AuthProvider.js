@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
 
     //Update user
     const updateUser = (userInfo) => {
-        return updateProfile(user, userInfo);
+        return updateProfile(auth.currentUser, userInfo);
     }
 
     //googleSignIn

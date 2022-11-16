@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { format } from 'date-fns';
+import { AuthContext } from '../../../Contexts/AuthProvider';
+import toast from 'react-hot-toast';
 
-const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
     //treatment is just another name of appointmentOption with name,slots,_id.
     const { name, slots } = treatment;
     const date = format(selectedDate, 'PP');
+    const { user } = useContext(AuthContext)
 
 
     const handleBooking = event => {
@@ -20,14 +23,31 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
             appointmentDate: date,
             treatment: name,
             patient: patientName,
-            name,
             slot,
             email,
             phone,
         }
         //TODO-- send data to the server and other operation
-        console.log(booking)
-        setTreatment(null)
+        fetch('http://localhost:5000/bookings', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+
+                console.log(booking)
+                if (data.acknowledged) {
+                    setTreatment(null)
+                    toast.success('Booking confirmed')
+                    refetch();
+                }
+                else {
+                    toast.error(data.message)
+                }
+            })
 
 
     }
@@ -47,8 +67,8 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
                                 slots.map((slot, i) => <option value={slot} key={i}>{slot}</option>)
                             }
                         </select>
-                        <input name='patientName' type="text" placeholder="Your Name" className="input input-bordered w-full" />
-                        <input name='email' type="email" placeholder="Email" className="input input-bordered w-full" />
+                        <input name='patientName' type="text" defaultValue={user?.displayName} readOnly placeholder="Your Name" className="input input-bordered w-full" />
+                        <input name='email' type="email" defaultValue={user?.email} disabled placeholder="Email" className="input input-bordered w-full" />
                         <input name='phone' type="text" placeholder="Phone Number" className="input input-bordered w-full" />
                         <br />
                         <input className='w-full  btn btn-neutral' type="submit" value="Submit" />
