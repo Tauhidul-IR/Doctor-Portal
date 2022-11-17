@@ -3,12 +3,19 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import toast from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, updateUser, googleSignIn } = useContext(AuthContext)
     const [signUpError, setSignUpError] = useState(null)
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+    const [token] = useToken(createdUserEmail)
     const navigate = useNavigate();
+
+    if (token) {
+        navigate('/')
+    }
 
     const handleSignUp = data => {
         console.log(data)
@@ -24,7 +31,8 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        navigate('/');
+                        saveUser(data.name, data.email)
+                        // navigate('/');
                     })
                     .catch(error => console.error(error))
             })
@@ -34,14 +42,45 @@ const SignUp = () => {
             })
     }
 
+
+
     const handleGoogleLogin = () => {
         googleSignIn()
             .then((result) => {
                 const user = result.user
                 console.log(user)
+                // navigate('/');
             })
             .catch(error => console.error(error))
     }
+
+    const saveUser = (name, email) => {
+        const user = { name, email };
+        fetch('http://localhost:5000/users', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCreatedUserEmail(email)
+                // navigate('/');
+            })
+            .catch(error => console.error(error))
+    }
+
+    // const getUserToken = email => {
+    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.accessToken) {
+    //                 localStorage.setItem('accessToken', data.accessToken)
+    //                 navigate('/');
+    //             }
+    //         })
+    // }
 
 
 

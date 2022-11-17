@@ -8,6 +8,10 @@ import SignUp from '../../Pages/SignUp/SignUp';
 import DashBoard from '../../Pages/DashBoard/DashBoard/DashBoard';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ResetPassword from '../../Pages/Login/ResetPassword';
+import DashBoardLayout from '../../layout/DashBoardLayout';
+import Myappointment from '../../Pages/DashBoard/MyAppointment/Myappointment';
+import AllUsers from '../../Pages/DashBoard/AllUsers/AllUsers';
+import AdminRoute from '../AdminRoute/AdminRoute';
 
 
 
@@ -42,7 +46,17 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>
+        element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <Myappointment></Myappointment>
+            },
+            {
+                path: '/dashboard/allUsers',
+                element: <AdminRoute> <AllUsers></AllUsers></AdminRoute>
+            }
+        ]
     }
 ]);
 
