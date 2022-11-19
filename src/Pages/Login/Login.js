@@ -20,7 +20,7 @@ const Login = () => {
 
 
     const handleLogin = data => {
-        console.log(data)
+        // console.log(data)
         setLoginError('');
         loginUser(data.email, data.password)
             .then(result => {
@@ -41,6 +41,7 @@ const Login = () => {
             .then((result) => {
                 const user = result.user
                 console.log(user)
+
             })
             .catch(error => console.error(error))
     }

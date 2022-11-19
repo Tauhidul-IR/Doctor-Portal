@@ -3,9 +3,10 @@ import { AuthContext } from '../../../Contexts/AuthProvider';
 import {
     useQuery,
 } from '@tanstack/react-query'
+import Loading from '../../../Share/Loading/Loading';
 
 const Myappointment = () => {
-    const { user } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     const url = `http://localhost:5000/bookings?email=${user?.email}`;
 
 
@@ -22,6 +23,10 @@ const Myappointment = () => {
         }
     })
     console.log('boooooooooooooo', bookings)
+
+    if (loading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div>
@@ -40,7 +45,8 @@ const Myappointment = () => {
                     </thead>
                     <tbody>
                         {
-                            bookings.map((booking, i) =>
+                            bookings &&
+                            bookings?.map((booking, i) =>
                                 <tr key={booking._id}>
                                     <th>{i + 1}</th>
                                     <td>{booking.patient}</td>
