@@ -11,10 +11,10 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 const Payment = () => {
     const booking = useLoaderData();
     //router a loader use korle loading add korar jonno
-    const navigation = useNavigation();
-    if (navigation.state === "loading") {
-        return <Loading></Loading>
-    }
+    // const navigation = useNavigation();
+    // if (navigation.state === "loading") {
+    //     return <Loading></Loading>
+    // }
     console.log(booking);
     return (
         <div>
