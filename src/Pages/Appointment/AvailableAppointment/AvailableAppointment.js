@@ -20,7 +20,7 @@ const AvailableAppointment = ({ selectedDate }) => {
     const { data: appointmentOptions = [], refetch, isLoading } = useQuery({
         queryKey: ['appointmentOptions', date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/appointmentOption?date=${date}`)
+            const res = await fetch(`https://doctor-portal-server-psi.vercel.app/appointmentOption?date=${date}`)
             const data = await res.json();
             return data;
         }
@@ -34,7 +34,7 @@ const AvailableAppointment = ({ selectedDate }) => {
     // const { data: appointmentOptions, isLoading } = useQuery({ ------or below
     // const { data: appointmentOptions = [] } = useQuery({
     //     queryKey: ['appointmentOption'],
-    //     queryFn: () => fetch('http://localhost:5000/appointmentOption')
+    //     queryFn: () => fetch('https://doctor-portal-server-psi.vercel.app/appointmentOption')
     //         .then(res => res.json())
     // })
 

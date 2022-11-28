@@ -29,7 +29,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
             price
         }
         //TODO-- send data to the server and other operation
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://doctor-portal-server-psi.vercel.app/bookings', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
